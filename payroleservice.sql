@@ -21,3 +21,8 @@ INSERT INTO employee_payroll VALUES('Abhishek','12345','2016/03/01') ,('Viahan',
 ---Retrieve all data from employee_payroll
 select * from employee_payroll;
 
+
+-----------Uc5-----------------------
+---------Retrieve Specific Data-------
+select Name,StartDate from employee_payroll where Name='Viahan';
+select * from employee_payroll where StartDate between cast('2005-01-01' as date) and getdate();

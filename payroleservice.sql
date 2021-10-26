@@ -134,3 +134,46 @@ insert into emp_Dept values('1','3'),('2','1'),('3','4'),('4','3');
 --creating duplicate, means same person works at different dept--
 insert into emp_Dept values('4','2');
 select * from emp_Dept;
+
+
+--UC12-----
+--Ensure all retrieve queries done especially in UC 4, UC 5 and UC 7 are working with new table structure--------
+
+---UC4(Retrieve the data)--------- 
+select company.company_Id ,company.company_name,EmployeeId,EmployeeName,Gender,EmployeePhoneNumber,EmployeeAddress,StartDate,payroll.BasicPay,TaxablePay,IncomeTax,Deductions,NetPay,department_table.DeptName from Employee
+inner join company on company.company_Id = Employee.CompanyId
+inner join payroll on payroll.EmpId = Employee.EmployeeId
+inner join emp_Dept on Employee.EmployeeId = emp_Dept.EmpId
+inner join department_table on department_table.DepartmentId = emp_Dept.DeptId;
+
+----UC5------Retrieve salary of a perticular person
+select Employee.EmployeeId,Employee.EmployeeName,payroll.BasicPay 
+from payroll --Table1-- 
+inner join
+Employee ---Table2---
+on Employee.EmployeeId=payroll.EmpId where Employee.EmployeeName = 'Veer';
+
+------UC5------Retrieve salary in a date range
+select Employee.EmployeeId,Employee.EmployeeName,payroll.BasicPay from payroll inner join
+Employee on Employee.EmployeeId = payroll.EmpId where Employee.StartDate between Cast('2020-01-01' as Date) and GETDATE();
+
+----------UC7---------
+---Sum of salary based on gender---
+select sum(payroll.BasicPay) as TotalSalary,Employee.Gender from Employee
+inner join payroll on Employee.EmployeeId = payroll.EmpId group by Employee.Gender
+
+---Average of salary based on gender---
+select avg(payroll.BasicPay) as averagesalary,Employee.Gender from Employee
+inner join payroll on Employee.EmployeeId = payroll.EmpId group by Employee.Gender
+
+---Minimum salary based on gender---
+select min(payroll.BasicPay) as minimumsalary,Employee.Gender from Employee
+inner join payroll on Employee.EmployeeId = payroll.EmpId group by Employee.Gender
+
+---Maximum salary based on gender---
+select max(payroll.BasicPay) as maximumsalary,Employee.Gender from Employee
+inner join payroll on Employee.EmployeeId = payroll.EmpId group by Employee.Gender;
+
+----Count the number of Employee's salary based on gender
+select count(payroll.BasicPay) as TotalSalary,Employee.Gender from Employee 
+inner join payroll on Employee.EmployeeId = payroll.EmpId group by Employee.Gender;

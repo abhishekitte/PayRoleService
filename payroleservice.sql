@@ -26,3 +26,10 @@ select * from employee_payroll;
 ---------Retrieve Specific Data-------
 select Name,StartDate from employee_payroll where Name='Viahan';
 select * from employee_payroll where StartDate between cast('2005-01-01' as date) and getdate();
+
+--------------Uc6------------------------
+-----------Alter the table to add gender---
+alter table employee_payroll add Gender char(1);
+update employee_payroll set Gender='M';
+update employee_payroll set Gender='F' where Id='1';
+

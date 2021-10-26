@@ -67,3 +67,70 @@ select * from employee_payroll;
 ------Create duplicate of person-------
 INSERT INTO employee_payroll(Name,BasicPay,StartDate,Gender,PhoneNumber,Department,Address,TaxablePay,Deduction,IncomeTax,NetPay) VALUES('Terissa','525245','2018/03/01','F','7345787969','Sales','Mumbai','1200','1650','2000','40013');
 INSERT INTO employee_payroll(Name,BasicPay,StartDate,Gender,PhoneNumber,Department,Address,TaxablePay,Deduction,IncomeTax,NetPay) VALUES('Terissa','525245','2018/03/01','F','7345787969','Marketing','Mumbai','0','0','0','0');
+
+
+-------------UC11-------------
+------By implimentaing ER, redoing UC 7--------------
+-----Create table--------Company Details---
+create table company
+(
+company_Id int identity(1,1) primary key,
+company_name varchar(255)
+)
+Insert into company values('Microsoft'),('Google')
+select * from company
+
+--Create table--Employee Details---
+create table Employee
+(
+EmployeeId int identity(1,1) primary key,
+EmployeeName varchar(255),
+Gender char(1),
+EmployeePhoneNumber bigint,
+EmployeeAddress varchar(255),
+StartDate date,
+CompanyId int
+Foreign key(CompanyId) references Company(company_Id)
+)
+Insert into Employee values('Naveen','M','8080277459','Mumbai','2021-10-10','1'),('Anvesh','M','9967320888','Chennai','2018-07-14','2'),('Ruchira','F','9930532545','Delhi','2019-03-15','2'),('Sushmita','F','9988773443','Hyderbad','2020-11-11','2');
+select * from Employee;
+
+--Create table---Payroll table---
+create table payroll
+(
+empId int 
+foreign key(empId) references Employee(EmployeeId),
+BasicPay float,
+TaxablePay float,
+IncomeTax float,
+Deductions float,
+NetPay float
+)
+Insert into payroll(empId,BasicPay,IncomeTax,Deductions)values('1','980000','50000','35000'),('2','620000','25000','30000'),('3','560500','12000','23000'),('4','420500','26000','12500');
+select * from payroll;
+Update payroll set TaxablePay = (BasicPay-Deductions)
+Update payroll set NetPay = (TaxablePay-IncomeTax)
+select * from payroll;
+
+-----Department and employee has many many relation so two diffrent table needed
+---Dept Table---
+create table department_table
+(
+DepartmentId int identity(1,1) primary key,
+DeptName varchar(255)
+)
+insert into department_table values('Developement'),('Marketing'),('HR'),('Sales');
+select * from department_table
+
+----Creating Employee Department table-----
+create table emp_Dept
+(
+EmpId int
+foreign key(EmpId) references Employee(EmployeeId),
+DeptId int
+foreign key(DeptId) references department_table(DepartmentId),
+)
+insert into emp_Dept values('1','3'),('2','1'),('3','4'),('4','3');
+--creating duplicate, means same person works at different dept--
+insert into emp_Dept values('4','2');
+select * from emp_Dept;

@@ -33,3 +33,11 @@ alter table employee_payroll add Gender char(1);
 update employee_payroll set Gender='M';
 update employee_payroll set Gender='F' where Id='1';
 
+
+-------------------------Uc7----------------------------------------
+----calculate sum,avergae,min,max,count of employee ased on gender---
+select SUM(Salary) as TotalSalary,Gender from employee_payroll group by Gender;
+select AVG(Salary) as AverageSalary from employee_payroll group by Gender;
+select count(Salary) as TotalSalary,Gender from employee_payroll group by Gender;
+select Min(Salary) as MinSalary,Gender from employee_payroll group by Gender;
+select Max(Salary) as MaxSalary,Gender from employee_payroll group by Gender;

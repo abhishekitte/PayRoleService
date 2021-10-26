@@ -15,3 +15,9 @@ CREATE TABLE employee_payroll(
 
 	--------UC3 insert operation--------
 INSERT INTO employee_payroll VALUES('Abhishek','12345','2016/03/01') ,('Viahan','13335','2018/01/05'),('Virat','525245','2019/03/01');
+
+
+--------UC4-----------
+---Retrieve all data from employee_payroll
+select * from employee_payroll;
+
